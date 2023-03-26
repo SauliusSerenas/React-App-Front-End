@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from "react";
 import axios from "axios";
 import {Link, useParams} from "react-router-dom";
+import i18n from "i18next";
 
 export default function Home() {
     const [users, setUsers] = useState([]);
@@ -27,11 +28,11 @@ export default function Home() {
                 <table className="table border shadow">
                     <thead>
                     <tr>
-                        <th scope="col">Nr</th>
-                        <th scope="col">Name</th>
-                        <th scope="col">Surname</th>
-                        <th scope="col">Email</th>
-                        <th scope="col">Action</th>
+                        <th scope="col">{i18n.t("uNumber")}</th>
+                        <th scope="col">{i18n.t("uName")}</th>
+                        <th scope="col">{i18n.t("uSurname")}</th>
+                        <th scope="col">{i18n.t("uEmail")}</th>
+                        <th scope="col">{i18n.t("uAction")}</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -48,19 +49,19 @@ export default function Home() {
                                     className="btn btn-primary mx-2"
                                     to={`/viewuser/${user.id}`}
                                 >
-                                    View
+                                    {i18n.t("uView")}
                                 </Link>
                                 <Link
                                     className="btn btn-outline-primary mx-2"
                                     to={`/edituser/${user.id}`}
                                 >
-                                    Edit
+                                    {i18n.t("uEdit")}
                                 </Link>
                                 <button
                                     className="btn btn-danger mx-2"
                                     onClick={() => deleteUser(user.id)}
                                 >
-                                    Delete
+                                    {i18n.t("uDelete")}
                                 </button>
                             </td>
                         </tr>

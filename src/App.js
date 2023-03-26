@@ -6,13 +6,15 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import AddUser from "./users/AddUser";
 import EditUser from "./users/EditUser";
 import ViewUser from "./users/ViewUser";
+import { Translation} from "react-i18next";
 
 function App() {
     return (
+        <Translation>
+            {(t, { i18n }) => (
         <div className="App">
             <Router>
                 <Navbar />
-
                 <Routes>
                     <Route path="/" element={<Home />} />
                     <Route path="/adduser" element={<AddUser />} />
@@ -21,6 +23,8 @@ function App() {
                 </Routes>
             </Router>
         </div>
+                )}
+        </Translation>
     );
 }
 
