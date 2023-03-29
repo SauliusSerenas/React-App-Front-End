@@ -1,12 +1,12 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import React, {useEffect, useState} from "react";
+import {Link, useNavigate, useParams} from "react-router-dom";
 import i18n from "i18next";
 
 export default function EditUser() {
     let navigate = useNavigate();
 
-    const { id } = useParams();
+    const {id} = useParams();
 
     const [user, setUser] = useState({
         name: "",
@@ -14,10 +14,10 @@ export default function EditUser() {
         email: "",
     });
 
-    const { name, surname, email } = user;
+    const {name, surname, email} = user;
 
     const onInputChange = (e) => {
-        setUser({ ...user, [e.target.name]: e.target.value });
+        setUser({...user, [e.target.name]: e.target.value});
     };
 
     useEffect(() => {

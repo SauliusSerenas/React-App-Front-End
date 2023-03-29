@@ -53,7 +53,7 @@ export default function AddUser() {
                                 className="form-control"
                                 placeholder={i18n.t("plchSurname")}
                                 name="surname"
-                                name={surname}
+                                value={surname}
                                 onChange={(e) => onInputChange(e)}
                             />
                         </div>
