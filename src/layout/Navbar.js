@@ -19,14 +19,6 @@ export default function Navbar() {
                     <Link className="btn btn-outline-light" to="/adduser">
                         {i18n.t("eAdd")}
                     </Link>
-
-                    <Link className="btn btn-outline-light" to="/signup">
-                        Sign up
-                    </Link>
-
-                    <Link className="btn btn-outline-light" to="/signin">
-                        Sign in
-                    </Link>
                 </div>
 
                 <select className="btn btn-outline-light"

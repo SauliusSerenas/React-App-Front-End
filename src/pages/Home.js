@@ -10,7 +10,7 @@ export default function Home() {
 
     useEffect(() => {
         loadUsers();
-    },[] );
+    }, []);
 
     const loadUsers = async () => {
         const result = await axios.get("/users");
