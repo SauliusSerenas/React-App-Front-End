@@ -1,28 +1,37 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import i18n from "i18next";
+import { useFormik } from "formik";
+import * as Yup from "yup";
 
 export default function AddUser() {
     let navigate = useNavigate();
 
-    const [user, setUser] = useState({
-        name: "",
-        surname: "",
-        email: "",
+    const formik = useFormik({
+        initialValues: {
+            name: "",
+            surname: "",
+            email: "",
+        },
+        validationSchema: Yup.object({
+            name: Yup.string()
+                .min(2, 'Too Short!')
+                .max(50, 'Too Long!')
+                .required('Name is required!'),
+            surname: Yup.string()
+                .min(2, 'Too Short!')
+                .max(50, 'Too Long!')
+                .required('Surname is required!'),
+            email: Yup.string()
+                .email("Invalid email address")
+                .required("Email is required"),
+        }),
+        onSubmit: async (values) => {
+            await axios.post("/user", values);
+            navigate("/");
+        },
     });
-
-    const { name, surname, email } = user;
-
-    const onInputChange = (e) => {
-        setUser({ ...user, [e.target.name]: e.target.value });
-    };
-
-    const onSubmit = async (e) => {
-        e.preventDefault();
-        await axios.post("/user", user);
-        navigate("/");
-    };
 
     return (
         <div className="container">
@@ -30,7 +39,7 @@ export default function AddUser() {
                 <div className="col-md-6 offset-md-3 border rounded p-4 mt-2 shadow">
                     <h2 className="text-center m-4">{i18n.t("eAdd")}</h2>
 
-                    <form onSubmit={(e) => onSubmit(e)}>
+                    <form onSubmit={formik.handleSubmit}>
                         <div className="mb-3">
                             <label htmlFor="Name" className="form-label">
                                 {i18n.t("uName")}
@@ -40,9 +49,13 @@ export default function AddUser() {
                                 className="form-control"
                                 placeholder={i18n.t("plchName")}
                                 name="name"
-                                value={name}
-                                onChange={(e) => onInputChange(e)}
+                                value={formik.values.name}
+                                onChange={formik.handleChange}
+                                onBlur={formik.handleBlur}
                             />
+                            {formik.touched.name && formik.errors.name ? (
+                                <div className="text-danger">{formik.errors.name}</div>
+                            ) : null}
                         </div>
                         <div className="mb-3">
                             <label htmlFor="Surname" className="form-label">
@@ -53,9 +66,13 @@ export default function AddUser() {
                                 className="form-control"
                                 placeholder={i18n.t("plchSurname")}
                                 name="surname"
-                                value={surname}
-                                onChange={(e) => onInputChange(e)}
+                                value={formik.values.surname}
+                                onChange={formik.handleChange}
+                                onBlur={formik.handleBlur}
                             />
+                            {formik.touched.surname && formik.errors.surname ? (
+                                <div className="text-danger">{formik.errors.surname}</div>
+                            ) : null}
                         </div>
                         <div className="mb-3">
                             <label htmlFor="Email" className="form-label">
@@ -66,9 +83,13 @@ export default function AddUser() {
                                 className="form-control"
                                 placeholder={i18n.t("plchMail")}
                                 name="email"
-                                value={email}
-                                onChange={(e) => onInputChange(e)}
+                                value={formik.values.email}
+                                onChange={formik.handleChange}
+                                onBlur={formik.handleBlur}
                             />
+                            {formik.touched.email && formik.errors.email ? (
+                                <div className="text-danger">{formik.errors.email}</div>
+                            ) : null}
                         </div>
                         <button type="submit" className="btn btn-outline-primary">
                             {i18n.t("uSubmit")}
